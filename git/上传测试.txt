@@ -1,0 +1,91 @@
+创建项目：vue init webpack my-project-first(项目名)
+进入创建好的项目文件夹，在项目里安装依赖
+cnpm install
+淘宝镜像安装路由：cnpm install vue-router --save-dev
+
+请求后台资源的模块。
+安装axios：           cnpm install axios -S                       cnpm install axios vue-axios --save
+安装elemebt-ui：cnpm i element-ui -S            
+安装qs：               cnpm install qs
+安装cookies：cnpm install vue-cookies --save
+
+main.js中
+//qs
+import QS from 'qs'
+// 将qs放到原型链中
+Vue.prototype.$qs = QS
+//ElementUI
+import ElementUI from 'element-ui';
+import 'element-ui/lib/theme-chalk/index.css';
+Vue.use(ElementUI)
+//axios
+import axios from 'axios';
+import VueAxios from 'vue-axios'
+Vue.use(VueAxios,axios)
+Vue.prototype.$axios = axios
+
+
+build：webpack.base.conf.js   43行注释
+eslint    检查错误
+控制面板中：npm root -g 查看全局安装的第三方插件的位置、
+C:\Users\刘\AppData\Roaming\npm\node_modules
+
+
+import ElementUI from 'element-ui';
+import 'element-ui/lib/theme-chalk/index.css';
+import axios from 'axios';
+import VueAxios from 'vue-axios'
+import QS from 'qs'
+import VueCookies from 'vue-cookies'
+
+Vue.use(VueCookies)
+Vue.use(ElementUI)
+Vue.prototype.$axios = axios
+Vue.prototype.$qs = QS
+//axios
+Vue.use(VueAxios,axios)
+Vue.config.productionTip = false;
+
+// cookies无法传到后台
+axios.defaults.withCredentials = true
+//添加响应拦截器
+axios.interceptors.response.use(function (config) {
+  console.log("响应拦截===========")
+  if(config.data.code==1002){
+    location.href='/Login'
+  }
+  return config
+})
+//添加请求拦截器
+axios.interceptors.request.use(function (config) {
+  console.log("请求拦截===========")
+  // var token=VueCookies.get("token")
+  // console.log(config)
+  // //config.headers("x-auth",token)
+  // config.headers.auth=token;
+  return config
+})
+
+
+
+
+套用样式引入依赖
+
+
+cnpm install vue-i18n --save
+cnpm install
+cnpm install vue-cropperjs -S
+cnpm install vuedraggable -S
+cnpm install vue-schart -S
+cnpm install vue-quill-editor -S
+npm install --save axios babel-polyfill
+npm install babel-polyfill --save
+cnpm install mavon-editor -S
+
+
+
+
+cnpm install --save element-ui
+cnpm install --save
+cnpm install --save vuex
+
