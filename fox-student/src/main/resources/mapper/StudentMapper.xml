@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 为这个mapper指定一个唯一的namespace，namespace的值习惯上设置成包名+sql映射文件名，这样就能够保证namespace的值是唯一的
+	例如namespace="com.szh.mapper.personMapper"就是com.szh.mapper(包名)+personMapper(personMapper.xml文件去除后缀) -->
+<mapper namespace="com.fh.student.mapper.StudentMapper">
+<!--    <select id="queryStudent" parameterType="com.fh.student.model.Student" resultType="com.fh.student.model.Student">-->
+<!--        select * from t_student where 1=1 limit #{pagingCurrent},#{pagingSize};-->
+<!--    </select>-->
+
+<!--    <select id="queryCount" parameterType="com.fh.student.model.Student" resultType="long">-->
+<!--      select count(*) from t_student;-->
+<!--    </select>-->
+<!--    <update id="updateStudent" parameterType="com.fh.student.model.Student">-->
+<!--        update t_student set studentName=#{studentName},studentSex=#{studentSex},-->
+<!--        studentAge=#{studentAge},studentEb=#{studentEb},studentPhone=#{studentPhone},-->
+<!--        studentPatriarchName=#{studentPatriarchName},studentPatriarchPhone=#{studentPatriarchPhone},-->
+<!--        homeAddress=#{homeAddress},idNumber=#{idNumber},timesOfRepetition=#{timesOfRepetition} where studentId=#{studentId};-->
+<!--    </update>-->
+
+<!--    <insert id="addStudent" parameterType="com.fh.student.model.Student">-->
+<!--        insert into t_student (studentName,studentSex,studentAge,studentEb,studentPhone,studentPatriarchName,studentPatriarchPhone,homeAddress,idNumber,timesOfRepetition)-->
+<!--        values (#{studentName},#{studentSex},#{studentAge},#{studentEb},#{studentPhone},#{studentPatriarchName},#{studentPatriarchPhone},#{homeAddress},#{idNumber},#{timesOfRepetition});-->
+<!--    </insert>-->
+<!--    <select id="queryNoPage2" parameterType="com.fh.student.model.Student" resultType="com.fh.student.model.Student">-->
+<!--     select * from t_student;-->
+<!--   </select>-->
+</mapper>

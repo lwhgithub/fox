@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 为这个mapper指定一个唯一的namespace，namespace的值习惯上设置成包名+sql映射文件名，这样就能够保证namespace的值是唯一的
+	例如namespace="com.szh.mapper.personMapper"就是com.szh.mapper(包名)+personMapper(personMapper.xml文件去除后缀) -->
+<mapper namespace="com.fh.car.mapper.CarMapper">
+<!--    <resultMap id="select" type="com.fh.car.model.Car" >-->
+<!--        <id column="t_carid" property="carid"></id>-->
+<!--        <result column="t_carname"  property="carname"></result>-->
+<!--        <result column="t_carType" property="carType"></result>-->
+<!--        <result column="t_carimgPath" property="carimgPath"></result>-->
+<!--        <result column="t_carprice" property="carprice"></result>-->
+<!--        <result column="t_carbid" property="carbid"></result>-->
+<!--        <result column="t_carcreateDate" property="carcreateDate"></result>-->
+<!--    </resultMap>-->
+<!--    <resultMap id="selecta" type="com.fh.car.model.Brand">-->
+<!--        <id column="t_bid" property="bid"></id>-->
+<!--        <result column="t_brandname"  property="brandname"></result>-->
+<!--    </resultMap>-->
+
+    <select id="queryCar" parameterType="com.fh.car.model.CarParam" resultType="com.fh.car.model.Car">
+        select * from t_car c
+        <include refid="sql"></include>
+        order by carid desc limit #{pagingStart},#{pagingSize};
+    </select>
+    <select id="queryCarcount" resultType="long"  >
+        select count(*) from  t_car
+    </select>
+    <select id="queryCarBrand" parameterType="com.fh.car.model.Brand" resultType="com.fh.car.model.Brand">
+        select * from t_brand
+    </select>
+    <insert id="addCar" parameterType="com.fh.car.model.Car">
+        insert into t_car (carname,carType,carimgPath,carprice,carcreateDate,carbid)
+                values (#{carname},#{carType},#{carimgPath},#{carprice},#{carcreateDate},#{carbid});
+    </insert>
+    <delete id="deleteCar" parameterType="int">
+        delete from t_car where carid=#{carid}
+    </delete>
+    <update id="updateCar" parameterType="com.fh.car.model.Car">
+        update t_car set carname=#{carname},carType=#{carType},
+        carimgPath=#{carimgPath},carprice=#{carprice},carcreateDate=#{carcreateDate},
+        carbid=#{carbid} where carid=#{carid};
+    </update>
+    <delete id="deleteBatch" parameterType="int" >
+        delete from t_car where carid in
+        <foreach collection="list" item="idList" open="(" separator="," close=")">
+            #{idList}
+        </foreach>
+    </delete>
+    <sql id="sql">
+        <where>
+            <if test="carname != null and carname != ''">
+                c.carname like concat('%',#{carname},'%')
+            </if>
+            <if test="carpriceMin != null and carpriceMin != ''">
+                and c.carprice &gt;= #{carpriceMin}
+            </if>
+            <if test="carpriceMax != null and carpriceMax != ''">
+                and c.carprice &lt;= #{carpriceMax}
+            </if>
+            <if test="carType != null and carType != ''">
+                and c.carType = #{carType}
+            </if>
+            <if test="carcreateDateMin != null">
+                and c.carcreateDate &gt;= #{carcreateDateMin}
+            </if>
+            <if test="carcreateDateMax != null">
+                and c.carcreateDate &lt;= #{carcreateDateMax}
+            </if>
+            <if test="carbid != null and carbid != ''">
+                and c.carbid = #{carbid}
+            </if>
+
+        </where>
+    </sql>
+</mapper>

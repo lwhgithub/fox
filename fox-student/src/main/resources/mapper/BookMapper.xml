@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 为这个mapper指定一个唯一的namespace，namespace的值习惯上设置成包名+sql映射文件名，这样就能够保证namespace的值是唯一的
+	例如namespace="com.szh.mapper.personMapper"就是com.szh.mapper(包名)+personMapper(personMapper.xml文件去除后缀) -->
+<mapper namespace="com.fh.book.mapper.BookMapper">
+    <select id="queryBook" parameterType="com.fh.book.model.BookParam" resultType="com.fh.book.model.Book">
+        select * from t_book b
+         <include refid="sql"></include>
+         order by bookId desc limit #{pagingStart},#{pagingSize};
+    </select>
+
+    <select id="queryCount" parameterType="com.fh.book.model.BookParam" resultType="long">
+      select count(*) from t_book b <include refid="sql"></include>;
+    </select>
+    <delete id="deleteBook" parameterType="int">
+        delete from t_book where bookId=#{bookId}
+    </delete>
+    <update id="updateBook" parameterType="com.fh.book.model.BookParam">
+        update t_book set bookName=#{bookName},bookPrice=#{bookPrice},
+        bookPeoples=#{bookPeoples},bookType=#{bookType},bookCreateDate=#{bookCreateDate},
+        bookArea=#{bookArea} where bookId=#{bookId};
+    </update>
+
+    <insert id="addBook" parameterType="com.fh.book.model.Book">
+        insert into t_book (bookName,bookPrice,bookPeoples,bookType,bookCreateDate,bookArea)
+        values (#{bookName},#{bookPrice},#{bookPeoples},#{bookType},#{bookCreateDate},#{bookArea});
+    </insert>
+<!--    <select id="queryNoPage2" parameterType="com.fh.student.model.Student" resultType="com.fh.student.model.Student">-->
+<!--     select * from t_student;-->
+<!--   </select>-->
+    <sql id="sql">
+        <where>
+            <if test="bookName != null and bookName != ''">
+                b.bookName like concat('%',#{bookName},'%')
+            </if>
+            <if test="ps != null">
+                <foreach collection="ps" item="ps">
+                    and bookPeoples like '%${ps}%'
+                </foreach>
+            </if>
+            <if test="bookPriceMin != null and bookPriceMin != ''">
+                and b.bookPrice &gt;= #{bookPriceMin}
+            </if>
+            <if test="bookPriceMax != null and bookPriceMax != ''">
+                and b.bookPrice &lt;= #{bookPriceMax}
+            </if>
+            <if test="bookType != null and bookType != ''">
+                and b.bookType = #{bookType}
+            </if>
+            <if test="bookCreateDateMin != null">
+                and b.bookCreateDate &gt;= #{bookCreateDateMin}
+            </if>
+            <if test="bookCreateDateMax != null">
+                and b.bookCreateDate &lt;= #{bookCreateDateMax}
+            </if>
+            <if test="bookArea != null and bookArea != ''">
+                and b.bookArea = #{bookArea}
+            </if>
+
+        </where>
+    </sql>
+</mapper>
